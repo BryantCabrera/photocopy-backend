@@ -72,5 +72,18 @@ router.put('/:id', async (req, res) => {
 });
 
 //Delete Route
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedPhoto = await Photo.findByIdAndRemove(req.params.id);
+
+        console.log(deletedPhoto, ' this is deletedPhoto');
+        res.json({
+            status: 200,
+            message: 'Photo successfully deleted.'
+        });
+    } catch (err) {
+        res.send(err);
+    }
+});
 
 module.exports = router;
