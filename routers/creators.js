@@ -44,7 +44,18 @@ router.post('/', async (req, res) => {
 });
 
 //Show Route
-
+router.get('/:id', async (req, res) => {
+    try {
+        const foundCreator = await Creator.findById(req.params.id);
+        res.json({
+            status: 200,
+            data: foundCreator
+        });
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
 
 //Update Route
 
