@@ -1,0 +1,19 @@
+{
+  "name": "photocopy-backend",
+  "version": "1.0.0",
+  "description": "## A. Description photocopy is a React app built by Bryant Cabrera, Kevin Cuison, Hann-Wei Chang, Tianyu Li, James Peera, and John Mavandi.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryantCabrera/photocopy-backend.git"
+  },
+  "author": "Bryant Cabrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BryantCabrera/photocopy-backend/issues"
+  },
+  "homepage": "https://github.com/BryantCabrera/photocopy-backend#readme"
+}
