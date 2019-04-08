@@ -72,5 +72,18 @@ router.put('/:id', async (req, res) => {
 });
 
 //Delete Route
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedCreator = await Creator.findByIdAndRemove(req.params.id);
+
+        console.log(deletedCreator, ' this is deletedCreator');
+        res.json({
+            status: 200,
+            message: 'Creator successfully deleted.'
+        });
+    } catch (err) {
+        res.send(err);
+    }
+});
 
 module.exports = router;
