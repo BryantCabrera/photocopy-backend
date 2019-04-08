@@ -10,7 +10,9 @@ const cors = require('cors');
 
 require('./db/db');
 
+const authRouter = require('./routers/auth');
 const creatorsRouter = require('./routers/creators');
+const photosRouter = require('./routers/photos');
 
 /********** MIDDLEWARE **********/
 app.use(session({
@@ -32,7 +34,9 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 
 /********** ROUTERS/CONTROLLERS **********/
+app.use('/auth', authRouter);
 app.use('/creators', creatorsRouter);
+app.use('/photos', photosRouter);
 
 /********** LISTENER **********/
 app.listen(process.env.PORT, () => {
