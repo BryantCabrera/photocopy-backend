@@ -24,7 +24,24 @@ router.get('/', async (req, res) => {
 });
 
 //Create Route
+router.post('/', async (req, res) => {
+    let hashedPassword = await bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    req.body.password = hashedPassword;
 
+    console.log(req.body, 'hitting create Creator');
+    try {
+        const createdCreator = await Creator.create(req.body);
+        res.json({
+            status: 200,
+            message: 'Registration successful.',
+            data: createdCreator
+        });
+        
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
 
 //Show Route
 
