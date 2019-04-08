@@ -5,7 +5,8 @@ const photoSchema = new mongoose.Schema({
     date: Date, 
     category: String,
     price_min: Number,
-    price_max: Number
+    price_max: Number,
+    url: String
 });
 
 const Photo = mongoose.model('Photo', photoSchema);
