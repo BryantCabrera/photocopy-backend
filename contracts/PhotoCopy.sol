@@ -17,8 +17,26 @@ contract PhotoCopy {
         bool completed; //state of item
     }
 
-    //put these tasks in storage on blockchain
-    //create new var with mapping datatype
+    //puts these tasks in storage on blockchain
+    //creates new var with mapping datatype
         //mapping datatype ~hash where you store a key value pair (datatype => TheTaskNameFromStruct)
-    mapping(uint => Task) tasks;
+    mapping(uint => Task) public tasks;
+
+    //adds some tasks to list when smart contract is deployed
+        //called everytime this smart contract is run for the 1st time (upon deployment)
+        //this is default task
+    constructor ()  public {
+        createTask('Thank you for using PhotoCopy');
+    }
+
+    //creates tasks based on content defined in struct
+    function createTask(string memory _content) public {
+        //need to determine id of task we're going to create
+
+        //increments taskCount
+        taskCount ++;
+
+        //you put false as 3rd parameter because it is not completed yet
+        tasks[taskCount] = Task(taskCount, _content, false);
+    }
 }
