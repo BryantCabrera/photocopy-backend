@@ -12,7 +12,6 @@ const Photo = require('../models/photo');
 router.get('/', async (req, res) => {
     try {
         const allPhotos = await Photo.find({});
-
         res.json({
             status: 200,
             data: allPhotos
@@ -24,9 +23,11 @@ router.get('/', async (req, res) => {
 });
 
 //Create Route
+
+// need this route to add to mongo database
 router.post('/', async (req, res) => {
-    let hashedPassword = await bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-    req.body.password = hashedPassword;
+    // let hashedPassword = await bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    // req.body.password = hashedPassword;
 
     console.log(req.body, 'hitting create Photo');
     try {
@@ -36,12 +37,28 @@ router.post('/', async (req, res) => {
             message: 'Registration successful.',
             data: createdPhoto
         });
-        
+
     } catch (err) {
         console.log(err);
         res.send(err);
     }
 });
+
+
+// for uploading the image to cloudinary
+router.post('/image-upload', (req,res) => {
+    const values = Object.values(req.files)
+    const promises = values.map(image => cloudinary.uploader.upload(image.path))
+    
+    Promise
+      .all(promises)
+      .then(results => {
+          res.json(results)
+          console.log(results);
+          const imageURL = results[0].secure_url;
+          return imageURL;
+      })
+})
 
 //Show Route
 router.get('/:id', async (req, res) => {
@@ -60,7 +77,9 @@ router.get('/:id', async (req, res) => {
 //Update Route
 router.put('/:id', async (req, res) => {
     try {
-        const updatedPhoto = await Photo.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedPhoto = await Photo.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        });
         res.json({
             status: 200,
             data: updatedPhoto
@@ -85,5 +104,6 @@ router.delete('/:id', async (req, res) => {
         res.send(err);
     }
 });
+
 
 module.exports = router;
