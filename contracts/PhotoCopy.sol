@@ -22,6 +22,13 @@ contract PhotoCopy {
         //mapping datatype ~hash where you store a key value pair (datatype => TheTaskNameFromStruct)
     mapping(uint => Task) public tasks;
 
+    //creates TaskCreated event inside of solidity and is available to us in this smart contract
+    event TaskCreated(
+        uint id,
+        string content,
+        bool completed
+    );
+
     //adds some tasks to list when smart contract is deployed
         //called everytime this smart contract is run for the 1st time (upon deployment)
         //this is default task
@@ -30,6 +37,7 @@ contract PhotoCopy {
     }
 
     //creates tasks based on content defined in struct
+    //want to call this function externally from the frontend
     function createTask(string memory _content) public {
         //need to determine id of task we're going to create
 
@@ -38,5 +46,8 @@ contract PhotoCopy {
 
         //you put false as 3rd parameter because it is not completed yet
         tasks[taskCount] = Task(taskCount, _content, false);
+
+        //false because it's a new task and we haven't completed it yet
+        emit TaskCreated(taskCount, _content, false);
     }
 }

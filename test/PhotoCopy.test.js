@@ -28,4 +28,18 @@ contract ('PhotoCopy', (accounts) => {
         assert.equal(task.completed, false)
         assert.equal(taskCount.toNumber(), 1)
     });
+
+    //makes sure it creates tasks
+    it('creates tasks', async () => {
+        const result = await this.todoList.createTask('A new task')
+        const taskCount = await this.todoList.taskCount()
+        assert.equal(taskCount, 2)
+
+        //checks TaskCreated from PhotoCopy.sol smart contract event was triggered
+        //you can console.log this event
+        const event = result.logs[0].args
+        assert.equal(event.id.toNumber(), 2)
+        assert.equal(event.content, 'A new task')
+        assert.equal(event.completed, false)
+    });
 });
